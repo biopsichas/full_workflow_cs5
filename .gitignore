@@ -1,0 +1,13 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+Temp*
+Test*
+Libraries/buildr_script/.git
+Libraries/buildr_script/.Rproj.user
+Libraries/buildr_script/test_data
+Libraries/buildr_script/settings.R
+Libraries/buildr_script/.Rhistory
+Libraries/buildr_script/.gitignore
+Libraries/farmR_input/*.csv
