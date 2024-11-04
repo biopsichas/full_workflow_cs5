@@ -1,7 +1,7 @@
 ## Workflow for Uncalibrated Setup Preparation ---------------------------------
 ## 
-## Version 0.0.5
-## Date: 2024-07-18
+## Version 0.0.7
+## Date: 2024-11-04
 ## Developers: Svajunas Plunge    svajunas_plunge@sggw.edu.pl
 ##             Christoph Schürz   christoph.schuerz@ufz.de
 ##             Micheal Strauch    michael.strauch@ufz.de
@@ -66,6 +66,11 @@ if(length(db_path)>1){
 
 ## Loading weather data and downloading atmospheric deposition
 met <- SWATprepR::load_swat_weather(weather_path)
+
+## Fixed input values 
+met$data$ID2$RELHUM$RELHUM <- ifelse(met$data$ID2$RELHUM$RELHUM >= 0,
+                                     met$data$ID2$RELHUM$RELHUM/100, 
+                                     met$data$ID2$RELHUM$RELHUM)
 
 ## Calculating weather generator statistics
 wgn <- prepare_wgn(met)
