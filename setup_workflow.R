@@ -357,6 +357,8 @@ print(paste0("Your setup is located in the ", getwd(), "/", clean_path))
 ##------------------------------------------------------------------------------
 ## 20) Adding calibration.cal file to SWAT model (preparing calibrated setup)
 ##------------------------------------------------------------------------------
+stop("Remove this if you have calibration.cal file")
+
 cal_file_nb <- 1
 cal_file <- paste0(lib_path, "/calibration_cal/calibration", as.character(cal_file_nb), ".cal")
 file.copy(from = cal_file, 
