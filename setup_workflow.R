@@ -143,6 +143,10 @@ prepare_ps(pnt_data, dir_path, constant = TRUE)
 ## 9) Running SWATfamR'er input preparation script
 ##------------------------------------------------------------------------------
 
+## Overwriting plants.plt with adjusted manually
+file.copy(paste0(lib_path, "/files_to_overwrite_at_the_end/plants.plt"), dir_path, 
+          overwrite = TRUE)
+
 ## Setting directory and running Micha's SWAtfarmR'er input script
 in_dir <- paste0(lib_path, "/farmR_input")
 source(paste0(in_dir, "/write_SWATfarmR_input.R"), chdir=TRUE)
@@ -301,29 +305,34 @@ frm$write_operations(start_year = st_year, end_year = end_year)
 ## 17) Dealing with unconnected reservoirs 
 ##------------------------------------------------------------------------------
 
-## Overwriting with a set of manually adjusted files (if needed)
+## Overwriting with a set of manually adjusted files (if needed). Except plants.plt
+## which was overwritten in the step 9
 ## Directory could be empty, if you don't have any files to be used.
-file.copy(list.files(
-  path = paste0(lib_path, "/files_to_overwrite_at_the_end"), full.names = TRUE), 
+file.copy(grepl("plants.plt", list.files(
+  path = paste0(lib_path, "/files_to_overwrite_at_the_end"), full.names = TRUE)), 
   dir_path, overwrite = TRUE)
 
 ## Dealing with unconnected reservoirs 
 if(!file.exists(paste0(dir_path, '/reservoir.con.bkp0'))) copy_file_version(dir_path, 'reservoir.con', file_version = 0)
+if(!file.exists(paste0(dir_path, '/reservoir.res.bkp0'))) copy_file_version(dir_path, 'reservoir.res', file_version = 0)
 if(!file.exists(paste0(dir_path, '/hydrology.res.bkp0'))) copy_file_version(dir_path, 'hydrology.res', file_version = 0)
 
 reservoir_con <- readLines(paste0(dir_path, "/reservoir.con.bkp0"))
+reservoir_res <- readLines(paste0(dir_path, "/reservoir.res.bkp0"))
 hydrology_res <- readLines(paste0(dir_path, "/hydrology.res.bkp0"))
 
 for(i in c(3:length(reservoir_con))){
   if(substr(reservoir_con[i], start = 160, stop = 160) == "0" | grepl("aqu       1             rhg", reservoir_con[i], fixed = TRUE)){
     reservoir_con[i] <- paste0(substr(reservoir_con[i], start = 1, stop = 159), "1           aqu         1           rhg       1.00000  ")
-    hydrology_res[i] <- paste0(substr(hydrology_res[i], start = 1, stop = 115), "10000       0.80000       0.00000       0.00000  ")
+    reservoir_res[i] <- paste0(substr(reservoir_res[i], start = 1, stop = 68), "         null           sedres1           nutres1  ")
+    hydrology_res[i] <- paste0(substr(hydrology_res[i], start = 1, stop = 115), "10000       0.80000       0.00000  ")
   } else {
-    hydrology_res[i] <- paste0(substr(hydrology_res[i], start = 1, stop = 115), "00000       0.80000       0.00000       0.00000  ")
+    hydrology_res[i] <- paste0(substr(hydrology_res[i], start = 1, stop = 115), "00000       0.80000       0.00000  ")
   }
 }
 
 writeLines(reservoir_con, paste0(dir_path, "/", "reservoir.con"))
+writeLines(reservoir_res, paste0(dir_path, "/", "reservoir.res"))
 writeLines(hydrology_res, paste0(dir_path, "/", "hydrology.res"))
 
 ##------------------------------------------------------------------------------
