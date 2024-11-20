@@ -324,7 +324,7 @@ hydrology_res <- readLines(paste0(dir_path, "/hydrology.res.bkp0"))
 for(i in c(3:length(reservoir_con))){
   if(substr(reservoir_con[i], start = 160, stop = 160) == "0" | grepl("aqu       1             rhg", reservoir_con[i], fixed = TRUE)){
     reservoir_con[i] <- paste0(substr(reservoir_con[i], start = 1, stop = 159), "1           aqu         1           rhg       1.00000  ")
-    reservoir_res[i] <- paste0(substr(reservoir_res[i], start = 1, stop = 68), "         null           sedres1           nutres1  ")
+    reservoir_res[i] <- paste0(substr(reservoir_res[i], start = 1, stop = 67), "         null           sedres1           nutres1  ")
     hydrology_res[i] <- paste0(substr(hydrology_res[i], start = 1, stop = 115), "10000       0.80000       0.00000  ")
   } else {
     hydrology_res[i] <- paste0(substr(hydrology_res[i], start = 1, stop = 115), "00000       0.80000       0.00000  ")
