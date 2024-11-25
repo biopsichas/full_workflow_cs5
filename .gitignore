@@ -11,3 +11,4 @@ Libraries/buildr_script/settings.R
 Libraries/buildr_script/.Rhistory
 Libraries/buildr_script/.gitignore
 Libraries/farmR_input/*.csv
+*.bak
