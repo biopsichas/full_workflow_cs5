@@ -17,14 +17,14 @@ lib_path <- "Libraries"
 ##Starting year for model setup
 st_year <-  1998
 ##End year for the model setup
-end_year <- 2020
+end_year <- 2021
 
 ## Paths to input data
 
 ## Path to weather data
 ## Description of functions and how data example was prepared is on this webpage
 ## https://biopsichas.github.io/SWATprepR/articles/weather.html
-weather_path <- paste0(data_path, '/for_prepr/met')
+weather_path <- paste0(data_path, '/for_prepr/weather_data.xlsx')
 
 ## Path to point data
 ## Description of functions and how data example was prepared is on this webpage
@@ -69,7 +69,8 @@ soil_data_path   <- paste0(out_path, buildr_data, 'Usersoil_Pesnica_ready.csv')
 land_path <- paste0(out_path, buildr_data, 'land.shp')
 
 ## Channel input vector layer path 
-channel_path <- paste0(out_path, buildr_data, 'Pesnica_full_streams_final.shp')
+channel_path <- paste0(out_path, buildr_data, 'Pesnica_full_streams_red.shp')
+# channel_path <- paste0(out_path, buildr_data, "Pesnica_full_streams_reduced.shp")
 
 ## Catchment boundary vector layer path, all layers will be masked by the
 ## basin boundary
@@ -135,7 +136,7 @@ lu_generic_csv <- paste0(out_path, farmr_i_data, 'CS5_mgt_crops_generic.csv')
 
 ## Simulation period
 start_y <- st_year #starting year (consider at least 3 years for warm-up!)
-end_y <- end_year #ending year
+end_y <- ifelse(end_year > 2020, 2020, end_year) #ending year
 
 ## Prefix of cropland hrus (all names of hrus with a crop rotation must begin
 ## with this prefix in column 'lu' of your land use map)
