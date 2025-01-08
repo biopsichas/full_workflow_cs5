@@ -347,14 +347,28 @@ writeLines(reservoir_res, paste0(dir_path, "/", "reservoir.res"))
 writeLines(hydrology_res, paste0(dir_path, "/", "hydrology.res"))
 
 ##------------------------------------------------------------------------------
-## 18) Running final SWAT model pre-calibrated setup
+## 18) Updating any other files
+##------------------------------------------------------------------------------
+
+##For instance hydrology.hyd
+if(!file.exists(paste0(dir_path, '/hydrology.hyd.bkp0'))) {
+  copy_file_version(dir_path, 'hydrology.hyd', file_version = 0)
+}
+
+hydrology_hyd <- SWATtunR::read_tbl(paste0(dir_path, "/hydrology.hyd.bkp0"))
+hydrology_hyd$harg_pet <- 1.1
+hydrology_hyd <- mutate_if(hydrology_hyd, is.double, ~sprintf("%0.5f",.))
+write_tbl(hydrology_hyd, paste0(dir_path, '/hydrology.hyd'), fmt = c('%-14s', rep('%12s', 14)))
+
+##------------------------------------------------------------------------------
+## 19) Running final SWAT model pre-calibrated setup
 ##------------------------------------------------------------------------------
 
 ## Copy swat.exe into txtinout directory and run it
 exe_copy_run(lib_path, dir_path, swat_exe)
 
 ##------------------------------------------------------------------------------
-## 19) Extracting SWAT input files and overwriting with a set of files 
+## 20) Extracting SWAT input files and overwriting with a set of files 
 ##------------------------------------------------------------------------------
 
 ## Preparing directory
@@ -375,7 +389,7 @@ Please continue to soft-calibration workflow (softcal_workflow.R)")
 print(paste0("Your setup is located in the ", getwd(), "/", clean_path))
 
 ##------------------------------------------------------------------------------
-## 20) Adding calibration.cal file to SWAT model (preparing calibrated setup)
+## 21) Adding calibration.cal file to SWAT model (preparing calibrated setup)
 ##------------------------------------------------------------------------------
 stop("Remove this if you have calibration.cal file")
 
