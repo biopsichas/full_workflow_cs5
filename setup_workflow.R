@@ -175,15 +175,15 @@ file.remove(paste0(in_dir, "/", files))
 ##------------------------------------------------------------------------------
 ## 10) Additional editing of the farmR_input.csv file
 ##------------------------------------------------------------------------------
-
-## Reading the file 
-mgt <- paste0(out_dir, "/farmR_input.csv")
-mgt_file <- read.csv(mgt)
-
-## Updating farmR_input.csv for providing management schedules in drained areas
-mgt_file <- bind_rows(mgt_file, mgt_file %>% 
-                        mutate(land_use = gsub("_lum", "_drn_lum", land_use)))
-write_csv(mgt_file, file = mgt, quote = "needed", na = '')
+# 
+# ## Reading the file 
+# mgt <- paste0(out_dir, "/farmR_input.csv")
+# mgt_file <- read.csv(mgt)
+# 
+# ## Updating farmR_input.csv for providing management schedules in drained areas
+# mgt_file <- bind_rows(mgt_file, mgt_file %>% 
+#                         mutate(land_use = gsub("_lum", "_drn_lum", land_use)))
+# write_csv(mgt_file, file = mgt, quote = "needed", na = '')
 
 ##------------------------------------------------------------------------------
 ## 11) Updating landuse.lum file
