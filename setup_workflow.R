@@ -277,8 +277,8 @@ if(!file.exists(paste0(dir_path, '/fertilizer.frt.bkp0'))) {
   copy_file_version(dir_path, 'fertilizer.frt', file_version = 0)
 }
 fertilizer.frt <- SWATtunR::read_tbl(paste0(dir_path, "/fertilizer.frt.bkp0"))
-fertilizer.frt[nrow(fertilizer.frt)+1,] <- list("comp_manure", 0.0031, 0.0024, 0.0025, 0.0012, 0.99, "fresh_manure", "Comp_FreshManure")
-fertilizer.frt[nrow(fertilizer.frt)+1,] <- list("7:20:30", 0.07, 0.08728, 0, 0, 0, "null", "NPK")
+fertilizer.frt[nrow(fertilizer.frt)+1,] <- list("comp_manure", 0.0021, 0.0016, 0.0017, 0.008, 0.99, "fresh_manure", "Comp_FreshManure")
+fertilizer.frt[nrow(fertilizer.frt)+1,] <- list("7:20:30", 0.02, 0.08728, 0, 0, 0, "null", "NPK")
 fertilizer_frt_fmt <- c('%-18s', rep('%12s', 5), '%18s', '%-30s')
 write_tbl(fertilizer.frt, paste0(dir_path, '/fertilizer.frt'), fmt = fertilizer_frt_fmt)
 
